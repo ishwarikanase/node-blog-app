@@ -1,15 +1,19 @@
-const express=require('express');
-const bodyParser=require('body-parser');
-const mongoose=require('mongoose');
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+var routes = require('./routes/routeIndex');
 
-mongoose.Promise=global.Promise;
 
-const app=express();
-const port=3000;
+mongoose.Promise = global.Promise;
+
+const app = express();
+const port = 3000;
 const databaseURL = 'mongodb://localhost:27017/blog';
 
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use('/api', routes);
+
 
 mongoose.connect(databaseURL, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true }, function () { }).then(() => {
     console.log("successfully connected to database...");
